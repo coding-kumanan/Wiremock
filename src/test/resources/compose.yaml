@@ -1,0 +1,20 @@
+# compose file
+version: "3"
+services:
+  wiremock:
+    image: "wiremock/wiremock:latest"
+    ports:
+      - "8080:8080"
+    container_name: my_wiremock
+    volumes:
+      - ./__files:/home/wiremock/__files
+      - ./mappings:/home/wiremock/mappings
+    entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
+
+
+    #docker compose up in current directry to run the docker contrainer
+    #http://localhost:8080/mobile give one response from mapping.json
+    #http://localhost:8080/example give different response each time hit from mappping.json
+    #it mount the files& mapping folder, insead of copy so project changes will be updated to container for each restart.
+
+
